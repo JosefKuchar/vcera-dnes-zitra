@@ -2,6 +2,7 @@ import { Component, createSignal, For, onMount } from "solid-js";
 
 import Day from "./Day";
 
+// Get max scroll position
 const getLimit = () =>
   Math.max(
     document.body.scrollHeight,
@@ -11,12 +12,18 @@ const getLimit = () =>
     document.documentElement.offsetHeight
   );
 
+// Main component
 const App: Component = () => {
-  const [days, setDays] = createSignal<number[]>([
-    -4, -3, -2, -1, 0, 1, 2, 3, 4,
-  ]);
+  const [days, setDays] = createSignal<number[]>(
+    // -25 to 25 days
+    new Array(51).fill(0).map((_, i) => i - 25)
+  );
 
   onMount(() => {
+    // Scroll to the middle of the page
+    window.scrollTo(0, getLimit() / 2 - window.innerHeight / 2);
+
+    // Update days when scrolling
     document.addEventListener("scroll", () => {
       const limit = getLimit();
       const offset = 50;
@@ -41,7 +48,12 @@ const App: Component = () => {
     });
   });
 
-  return <For each={days()}>{(day) => <Day index={day} />}</For>;
+  // Render days
+  return (
+    <div class="bg-gray-800 text-white">
+      <For each={days()}>{(day) => <Day index={day} />}</For>
+    </div>
+  );
 };
 
 export default App;

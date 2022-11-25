@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "predeploy": "npm run build",
+    "predeploy": "vite build --base=vcera-dnes-zitra/",
     "deploy": "gh-pages -d dist"
   },
   "license": "MIT",

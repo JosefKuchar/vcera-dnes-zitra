@@ -1,4 +1,4 @@
-import { Component, createSignal } from "solid-js";
+import { Component, createSignal, onMount } from "solid-js";
 
 interface IProps {
   index: number;
@@ -31,9 +31,11 @@ const getDate = (index: number) => {
 const Day: Component<IProps> = ({ index }) => {
   const [date, setDate] = createSignal(getDate(index));
 
-  setInterval(() => {
-    setDate(getDate(index));
-  }, 1000); // Update date every second
+  onMount(() => {
+    setInterval(() => {
+      setDate(getDate(index));
+    }, 1000); // Update date every second
+  });
 
   return (
     <div class="text-center p-4 border-gray-700 border-2 rounded m-4">
